@@ -1,11 +1,13 @@
 import type { Day } from '~/types';
 
-export const usePlayerConfigStore = defineStore('config/player', () => {
+export const useConfigStore = defineStore('config', () => {
   // --------------------------------
   // State
   // --------------------------------
 
   const days = ref<Day[]>([]);
+
+  const filteredDays = computed(() => days.value);
 
   // --------------------------------
   // Computed
@@ -26,6 +28,7 @@ export const usePlayerConfigStore = defineStore('config/player', () => {
   return {
     isLoaded,
     days,
+    filteredDays,
     setDays,
   };
 });

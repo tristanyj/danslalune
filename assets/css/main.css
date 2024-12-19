@@ -2,12 +2,6 @@ html {
   @apply bg-gray-50;
 }
 
-body {
-  @apply border-[8px] md:border-[16px] border-gray-50;
-  background-color: #6c9591;
-  background-image: url('../images/asfalt-light.png');
-}
-
 #container svg {
   width: 100%;
   max-width: 1400px;

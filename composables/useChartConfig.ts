@@ -5,7 +5,7 @@ export function useChartConfig() {
 
   const width = 1400;
   const height = 1400;
-  const margin = 1;
+  const margin = 200;
 
   // ------------------------------
   // Proportions
@@ -22,7 +22,7 @@ export function useChartConfig() {
   // ------------------------------
 
   const radius = Math.min(width, height) / 2 - margin;
-  const innerRadiusPadding = 0.2;
+  const innerRadiusPadding = 0.5;
   const minRadius = radius * proportions[0] * innerRadiusPadding;
   const restRadius = radius * proportions[0] * (1 - innerRadiusPadding);
   const maxRadius = radius;
@@ -54,6 +54,13 @@ export function useChartConfig() {
   // Modifiers
   // ------------------------------
 
+  const color = {
+    separator: {
+      stroke: '#000',
+      highOpacity: 0.5,
+    },
+  };
+
   return {
     width,
     height,
@@ -64,6 +71,7 @@ export function useChartConfig() {
     restRadius,
     proportions,
     wrap,
+    color,
     layerCount,
     innerRadiusPadding,
     scalePositions,

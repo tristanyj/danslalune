@@ -4,6 +4,8 @@ import type { d3GSelection } from '@/types';
 
 const { width, height } = useChartConfig();
 const { drawCircleBackground, drawStatArcs } = useChartDrawArcs();
+const { drawDayLabels } = useChartDrawLabels();
+const { drawCircularSeparators, drawLinearSeparators } = useChartDrawLines();
 const { scales, updateScale } = useChartScales();
 
 const configStore = useConfigStore();
@@ -24,9 +26,14 @@ function createVisualization() {
   // BACKGROUND
   // -----------------
 
-  drawCircleBackground(g.value);
+  // drawCircleBackground(g.value);
 
-  drawStatArcs(g.value, scales.circle, 'base');
+  drawCircularSeparators(g.value);
+  drawLinearSeparators(g.value, scales.circle);
+
+  drawDayLabels(g.value, scales.circle);
+
+  // drawStatArcs(g.value, scales.circle, 'base');
 }
 
 const mountToContainer = () => {
