@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  @apply font-host border-[8px] md:border-[16px] border-gray-50;
+  @apply border-[8px] md:border-[16px] border-gray-50;
   background-color: #6c9591;
   background-image: url('../images/asfalt-light.png');
 }
@@ -12,64 +12,4 @@ body {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-}
-
-.stat-arc-hover,
-.group-arc-hover,
-.stat-label-arc-hover,
-.top-clickable-hover,
-.bottom-clickable-hover {
-  opacity: 0 !important;
-}
-
-.stat-arc-overlay,
-.group-arc-overlay,
-.stat-label-arc-overlay,
-.top-clickable-overlay,
-.bottom-clickable-overlay {
-  opacity: 0;
-}
-
-.stat-arc-overlay.hover,
-.group-arc-overlay.hover,
-.stat-label-arc-overlay.hover {
-  opacity: 0.05;
-}
-
-.top-clickable-overlay.hover,
-.bottom-clickable-overlay.hover {
-  transition: opacity 0.05s;
-  opacity: 0.05;
-}
-
-.darken:hover {
-  filter: brightness(0.85);
-}
-
-.group-arc-hover,
-.overlay,
-.checkbox {
-  cursor: pointer;
-}
-
-.spin-fast {
-  animation: spin 5s linear infinite;
-}
-
-.spin-mid {
-  animation: spin 20s linear infinite;
-}
-
-.spin-mid-reverse {
-  animation: spin 20s linear infinite reverse;
-}
-
-.spin-slow {
-  animation: spin 30s linear infinite;
-}
-
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
 }

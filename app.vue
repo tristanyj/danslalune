@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import dataset from '@/assets/data/dataset.json';
-import type { Category, Player } from './types';
+import type { Day } from './types';
 
-const playerConfigStore = usePlayerConfigStore();
-const { setPlayers } = playerConfigStore;
-
-const statConfigStore = useStatConfigStore();
-const { setCategories } = statConfigStore;
+const configStore = useConfigStore();
+const { setDays } = configStore;
 
 onMounted(() => {
-  setCategories(dataset.config.categories as unknown as Category[]);
-  setPlayers(dataset.players as unknown as Player[]);
+  setDays(dataset.days as unknown as Day[]);
 });
 </script>
 

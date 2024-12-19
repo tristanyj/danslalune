@@ -5,8 +5,7 @@ import { useWindowSize, useEventListener } from '@vueuse/core';
 const { width, height } = useWindowSize();
 
 const interactionStore = useInteractionStore();
-const { mousePosition, isTooltipVisible, tooltipStat, tooltipStatLabel } =
-  storeToRefs(interactionStore);
+const { mousePosition, isTooltipVisible, tooltip } = storeToRefs(interactionStore);
 
 const tooltipStyle = computed<CSSProperties>(() => {
   if (!mousePosition.value) return {};
@@ -42,16 +41,16 @@ const tooltipStyle = computed<CSSProperties>(() => {
 });
 
 const tooltipSize = ref({ width: 0, height: 0 });
-const tooltip = ref<HTMLElement | null>(null);
+const tooltipRef = ref<HTMLElement | null>(null);
 
 watch(
-  [tooltipStat, tooltipStatLabel, isTooltipVisible],
+  [tooltip, isTooltipVisible],
   async () => {
-    if (!tooltip.value) return;
+    if (!tooltipRef.value) return;
 
     await nextTick();
 
-    const rect = tooltip.value.getBoundingClientRect();
+    const rect = tooltipRef.value.getBoundingClientRect();
     tooltipSize.value = {
       width: rect.width,
       height: rect.height,
@@ -61,9 +60,9 @@ watch(
 );
 
 useEventListener(window, 'resize', () => {
-  if (!tooltip.value || !isTooltipVisible.value) return;
+  if (!tooltipRef.value || !isTooltipVisible.value) return;
 
-  const rect = tooltip.value.getBoundingClientRect();
+  const rect = tooltipRef.value.getBoundingClientRect();
   tooltipSize.value = {
     width: rect.width,
     height: rect.height,
@@ -71,7 +70,7 @@ useEventListener(window, 'resize', () => {
 });
 
 onMounted(() => {
-  if (!tooltip.value) return;
+  if (!tooltipRef.value) return;
 
   const resizeObserver = new ResizeObserver((entries) => {
     const rect = entries[0].contentRect;
@@ -81,7 +80,7 @@ onMounted(() => {
     };
   });
 
-  resizeObserver.observe(tooltip.value);
+  resizeObserver.observe(tooltipRef.value);
 
   onUnmounted(() => {
     resizeObserver.disconnect();
@@ -92,36 +91,12 @@ onMounted(() => {
 <template>
   <div
     v-show="isTooltipVisible"
-    ref="tooltip"
-    class="fixed stat-tooltip bg-gray-50 border rounded-md z-100 text-sm font-host"
+    ref="tooltipRef"
+    class="fixed stat-tooltip bg-gray-50 border rounded-md z-100 text-sm"
     :style="tooltipStyle"
   >
-    <template v-if="tooltipStat">
-      <UiTooltipHeader
-        :category="tooltipStat?.category"
-        :sub-category="tooltipStat?.subCategory"
-        :stat="tooltipStat?.stat"
-      />
-      <UiTooltipStat
-        :player="tooltipStat?.player"
-        :value="tooltipStat?.value"
-        :stat="tooltipStat?.stat"
-      />
-      <UiTooltipRecord
-        :value="tooltipStat?.record.value"
-        :holder="tooltipStat?.record.holder"
-      />
-    </template>
-    <template v-else-if="tooltipStatLabel">
-      <UiTooltipHeader
-        :category="tooltipStatLabel?.category"
-        :sub-category="tooltipStatLabel?.subCategory"
-        :stat="tooltipStatLabel?.stat"
-      />
-      <UiTooltipRecord
-        :value="tooltipStatLabel?.record.value"
-        :holder="tooltipStatLabel?.record.holder"
-      />
+    <template v-if="tooltip">
+      <div class="">lol</div>
     </template>
   </div>
 </template>
