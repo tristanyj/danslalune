@@ -5,7 +5,7 @@ export function useChartConfig() {
 
   const width = 1400;
   const height = 1400;
-  const margin = 100;
+  const margin = 1;
 
   // ------------------------------
   // Proportions
@@ -37,6 +37,10 @@ export function useChartConfig() {
   // ------------------------------
   // Legend
   // ------------------------------
+
+  const legend = {
+    columnCount: 10,
+  };
 
   // ------------------------------
   // Text wrapping
@@ -72,6 +76,7 @@ export function useChartConfig() {
     proportions,
     wrap,
     color,
+    legend,
     layerCount,
     innerRadiusPadding,
     scalePositions,

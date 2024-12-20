@@ -44,7 +44,12 @@ export default defineNuxtConfig({
         { name: 'og:image', content: '/backdrop.png' },
       ],
       style: [],
-      script: [],
+      script: [
+        {
+          src: 'https://unpkg.com/d3-regression@1.3.10/dist/d3-regression.min.js',
+          defer: true,
+        },
+      ],
     },
   },
   imports: {
