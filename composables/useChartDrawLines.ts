@@ -1,4 +1,5 @@
-import type { d3GSelection, Line } from '~/types';
+import * as d3 from 'd3';
+import type { d3GSelection, FilteredDay, Line } from '~/types';
 
 const createLine = (g: d3GSelection, params: Line) => {
   g.append('line')
@@ -17,7 +18,7 @@ export function useChartDrawLines() {
   const { radius, minRadius, color } = useChartConfig();
 
   const configStore = useConfigStore();
-  const { filteredDays } = storeToRefs(configStore);
+  const { filteredDays, selectedCategory } = storeToRefs(configStore);
 
   function drawCircularSeparators(g: d3GSelection) {
     g.append('circle')
@@ -46,13 +47,45 @@ export function useChartDrawLines() {
         y2,
         transform: `rotate(${180 + (startAngle * 180) / Math.PI})`,
         stroke: color.separator.stroke,
-        opacity: 0.25,
+        opacity: 0.1,
       });
     }
+  }
+
+  function drawCategoryCurve(g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) {
+    const group = g.append('g').attr('class', 'category-curve');
+    const radius = 350;
+    const padding = 30;
+
+    for (let i = 0; i < 6; i++) {
+      group
+        .append('circle')
+        .attr('r', radius + i * padding)
+        .attr('fill', 'none')
+        .attr('stroke', 'blue')
+        .attr('opacity', 0.25);
+    }
+
+    const closedData = [...filteredDays.value];
+
+    const lineGenerator = d3
+      .lineRadial<FilteredDay>()
+      .angle((d, i) => circleScale(i))
+      .radius((d) => radius + d.value * padding)
+      .curve(d3.curveLinearClosed);
+
+    group
+      .append('path')
+      .datum(closedData)
+      .attr('fill', 'none')
+      .attr('stroke', 'red')
+      .attr('stroke-width', 2)
+      .attr('d', lineGenerator);
   }
 
   return {
     drawCircularSeparators,
     drawLinearSeparators,
+    drawCategoryCurve,
   };
 }

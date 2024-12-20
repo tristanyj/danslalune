@@ -9,8 +9,7 @@ export function useChartScales() {
   };
 
   function updateScale(key: keyof typeof scales, count: number) {
-    const totalColumns = count;
-    scales[key].domain([0, totalColumns]).range([0, 2 * Math.PI]);
+    scales[key].domain([0, count]).range([0, 2 * Math.PI]);
   }
 
   return {

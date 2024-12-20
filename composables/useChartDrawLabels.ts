@@ -14,7 +14,7 @@ export function useChartDrawLabels() {
 
     for (let i = 0; i < filteredDays.value.length; i++) {
       const startIndex = i;
-      const nextIndex = i === filteredDays.value.length - 1 ? 0 : i + 1;
+      const nextIndex = i === filteredDays.value.length ? 0 : i + 1;
 
       const startAngle = circleScale(startIndex);
       const endAngle = circleScale(nextIndex);
@@ -22,7 +22,7 @@ export function useChartDrawLabels() {
 
       const textGroup = g.append('g').attr('class', className);
 
-      const text = filteredDays.value[i].date;
+      const text = filteredDays.value[i].id;
       const textAnchor = midAngle > Math.PI ? 'end' : 'start';
       const labelRadius = radius + 10;
 

@@ -2,8 +2,17 @@
 // Dataset
 // --------------------------------
 
-export interface Day {
+export type CategoryKey = 'velage' | 'matrice' | 'veau_perf' | 'agnelage';
+
+export interface Day extends Record<CategoryKey, number> {
   date: string;
+  moon: number;
+}
+
+export interface FilteredDay {
+  id: string;
+  moon: number;
+  value: number;
 }
 
 // --------------------------------

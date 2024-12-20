@@ -5,13 +5,13 @@ import type { d3GSelection } from '@/types';
 const { width, height } = useChartConfig();
 const { drawCircleBackground, drawStatArcs } = useChartDrawArcs();
 const { drawDayLabels } = useChartDrawLabels();
-const { drawCircularSeparators, drawLinearSeparators } = useChartDrawLines();
+const { drawCircularSeparators, drawLinearSeparators, drawCategoryCurve } = useChartDrawLines();
 const { scales, updateScale } = useChartScales();
 
 const configStore = useConfigStore();
-const { days } = storeToRefs(configStore);
+const { filteredDays, selectedCategory } = storeToRefs(configStore);
 
-updateScale('circle', days.value.length);
+updateScale('circle', filteredDays.value.length);
 
 const container = ref<HTMLElement | null>(null);
 const g = ref<d3GSelection | null>(null);
@@ -29,9 +29,10 @@ function createVisualization() {
   // drawCircleBackground(g.value);
 
   drawCircularSeparators(g.value);
+  drawCategoryCurve(g.value, scales.circle);
   drawLinearSeparators(g.value, scales.circle);
 
-  drawDayLabels(g.value, scales.circle);
+  // drawDayLabels(g.value, scales.circle);
 
   // drawStatArcs(g.value, scales.circle, 'base');
 }
@@ -54,6 +55,26 @@ const mountToContainer = () => {
 
   isLoading.value = false;
 };
+
+function updateVisualization() {
+  if (!container.value) return;
+  createVisualization();
+}
+
+watch(
+  () => selectedCategory.value,
+  () => {
+    updateVisualization();
+  }
+);
+
+watch(
+  () => filteredDays.value,
+  (days) => {
+    updateScale('circle', days.length);
+    updateVisualization();
+  }
+);
 
 onMounted(() => {
   mountToContainer();

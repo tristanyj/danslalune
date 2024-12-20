@@ -8,6 +8,7 @@ const { isLoaded } = storeToRefs(configStore);
 <template>
   <div class="grid content">
     <div class="relative">
+      <UiPicker />
       <div class="relative px-4">
         <UiChart v-if="isLoaded" />
         <div

@@ -5,7 +5,7 @@ export function useChartConfig() {
 
   const width = 1400;
   const height = 1400;
-  const margin = 200;
+  const margin = 100;
 
   // ------------------------------
   // Proportions
