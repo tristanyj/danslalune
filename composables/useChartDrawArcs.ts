@@ -82,8 +82,8 @@ export function useChartDrawArcs() {
             data: null,
           })
         )
-        .attr('fill', isOdd ? '#fff' : '#999')
-        .attr('opacity', 0.1);
+        .attr('fill', isOdd ? '#f4f4f9' : '#168aad')
+        .attr('opacity', 0.15);
     }
   };
 

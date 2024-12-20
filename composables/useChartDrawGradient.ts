@@ -13,9 +13,9 @@ export function useChartDrawGradient() {
       .attr('fx', '50%')
       .attr('fy', '50%');
 
-    gradient.append('stop').attr('offset', '85%').attr('stop-color', 'black');
+    gradient.append('stop').attr('offset', '85%').attr('stop-color', '#222');
 
-    gradient.append('stop').attr('offset', '100%').attr('stop-color', 'blue');
+    gradient.append('stop').attr('offset', '100%').attr('stop-color', '#0096c7');
   };
 
   return {
