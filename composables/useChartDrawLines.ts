@@ -1,5 +1,7 @@
 import * as d3Pkg from 'd3';
 import type { d3GSelection, FilteredDay, Line } from '~/types';
+import { calcTextLength, shouldFlipText } from '~/assets/scripts/utils';
+import { MONTHS } from '~/assets/scripts/constants';
 // import { regressionLoess } from 'd3-regression';
 
 const createLine = (g: d3GSelection, params: Line) => {
@@ -16,12 +18,12 @@ const createLine = (g: d3GSelection, params: Line) => {
 };
 
 export function useChartDrawLines() {
-  const { radius, minRadius, color } = useChartConfig();
+  const { radius, minRadius, color, legend } = useChartConfig();
 
   const { arcGenerator } = useChartGenerators();
 
   const configStore = useConfigStore();
-  const { filteredDays } = storeToRefs(configStore);
+  const { filteredDays, monthIndices, groupedByMonth } = storeToRefs(configStore);
 
   function drawCircularSeparators(g: d3GSelection) {
     g.append('circle')
@@ -40,10 +42,8 @@ export function useChartDrawLines() {
   function drawLinearSeparators(g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) {
     // for (let i = 0; i < filteredDays.value.length; i++) {
     //   const startAngle = circleScale(i);
-
     //   const y1 = minRadius;
     //   const y2 = radius;
-
     //   createLine(g, {
     //     className: 'separator',
     //     y1,
@@ -53,24 +53,22 @@ export function useChartDrawLines() {
     //     opacity: 0.1,
     //   });
     // }
-
-    createLine(g, {
-      className: 'separator',
-      y1: minRadius,
-      y2: radius,
-      transform: `rotate(${180 + (circleScale(0) * 180) / Math.PI})`,
-      stroke: color.separator.stroke,
-      opacity: 0.25,
-    });
-
-    createLine(g, {
-      className: 'separator',
-      y1: minRadius,
-      y2: radius,
-      transform: `rotate(${180 + (circleScale(filteredDays.value.length - 1) * 180) / Math.PI})`,
-      stroke: color.separator.stroke,
-      opacity: 0.25,
-    });
+    // createLine(g, {
+    //   className: 'separator',
+    //   y1: minRadius,
+    //   y2: radius,
+    //   transform: `rotate(${180 + (circleScale(0) * 180) / Math.PI})`,
+    //   stroke: color.separator.stroke,
+    //   opacity: 0.25,
+    // });
+    // createLine(g, {
+    //   className: 'separator',
+    //   y1: minRadius,
+    //   y2: radius,
+    //   transform: `rotate(${180 + (circleScale(filteredDays.value.length - 1) * 180) / Math.PI})`,
+    //   stroke: color.separator.stroke,
+    //   opacity: 0.25,
+    // });
   }
 
   function drawCategoryCurve(g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) {
@@ -127,7 +125,6 @@ export function useChartDrawLines() {
       angle: circleScale(i),
       smoothedValue: d[1], // The second element is the y (smoothed value)
     }));
-    console.log(values);
 
     const moonData = closedData.map((d) => {
       return {
@@ -166,6 +163,91 @@ export function useChartDrawLines() {
     //   });
     //   group.append('path').attr('d', arc).attr('fill', 'red').attr('opacity', 0.5);
     // }
+    console.log('monthIndices', monthIndices.value);
+
+    monthIndices.value.forEach((index) => {
+      const startAngle = circleScale(index);
+
+      createLine(group, {
+        className: 'separator',
+        y1: minRadius,
+        y2: radius + 25,
+        transform: `rotate(${180 + (startAngle * 180) / Math.PI})`,
+        stroke: color.separator.stroke,
+        opacity: 0.1,
+      });
+    });
+
+    createLine(g, {
+      className: 'separator',
+      y1: minRadius,
+      y2: radius + 25,
+      transform: `rotate(${180 + (circleScale(filteredDays.value.length - 1) * 180) / Math.PI})`,
+      stroke: color.separator.stroke,
+      opacity: 0.1,
+    });
+
+    // text
+    const indices = monthIndices.value;
+
+    for (let groupIndex = 0; groupIndex < indices.length + 1; groupIndex++) {
+      // if (groupIndex !== 2) continue;
+
+      const id = `${groupIndex < 9 ? `0${groupIndex + 1}` : groupIndex + 1}`;
+      const elId = `month-${id}`;
+      const isLegend = groupIndex + 1 === indices.length + 1;
+
+      console.log(id, isLegend);
+      const month = !isLegend ? MONTHS.find((m) => m.id === id) : null;
+      console.log(MONTHS);
+      const groupMonth = groupedByMonth.value[groupIndex - 1];
+      if (!isLegend && !month && !groupMonth) continue;
+
+      const startIndex = isLegend ? filteredDays.value.length - 1 : indices[groupIndex];
+      const text = isLegend ? 'Mois' : month?.name ?? 'Mois';
+
+      const nextGroupStartIndex = isLegend
+        ? startIndex + legend.columnCount + 1
+        : indices[groupIndex + 1] ?? startIndex + groupMonth.length;
+
+      // if (groupIndex === 0) {
+      console.log('startIndex', startIndex, groupIndex);
+      console.log('nextGroupStartIndex', nextGroupStartIndex, groupIndex);
+      // }
+
+      const startAngle = circleScale(startIndex);
+      const endAngle = circleScale(nextGroupStartIndex);
+      const midAngle = (startAngle + endAngle) / 2;
+
+      const shouldFlip = shouldFlipText(midAngle);
+      const offset = shouldFlip ? 10 : 0;
+      const labelRadius = radius + offset + 10;
+
+      const textArc = arcGenerator({
+        innerRadius: labelRadius,
+        outerRadius: labelRadius,
+        startAngle: shouldFlip ? endAngle : startAngle,
+        endAngle: shouldFlip ? startAngle : endAngle,
+        data: group,
+      });
+
+      const fontSize = 13;
+      const textLength = calcTextLength(g, elId, text, fontSize);
+
+      const arcLength = Math.abs(endAngle - startAngle) * labelRadius;
+      const textPercentage = (textLength / arcLength) * 100;
+      const textOffsetPercentage = (100 - textPercentage) / 4;
+
+      g.append('path').attr('id', elId).attr('d', textArc).attr('fill', 'none');
+
+      g.append('text')
+        .append('textPath')
+        .attr('href', `#${elId}`)
+        .attr('startOffset', `${textOffsetPercentage}%`)
+        .style('font-size', fontSize)
+        .style('font-weight', 'normal')
+        .text(text);
+    }
   }
 
   return {

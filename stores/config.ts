@@ -1,4 +1,5 @@
 import type { CategoryKey, Day, FilteredDay } from '~/types';
+import { MONTHS } from '~/assets/scripts/constants';
 
 export const useConfigStore = defineStore('config', () => {
   // --------------------------------
@@ -20,6 +21,27 @@ export const useConfigStore = defineStore('config', () => {
         };
       })
   );
+
+  const groupedByMonth = computed(() => {
+    const grouped = MONTHS.map((month) => {
+      const days = filteredDays.value.filter((day) => day.id.includes(`-${month.id}-`));
+      return days;
+    });
+
+    return grouped;
+  });
+
+  const monthIndices = computed(() => {
+    const indices = [];
+
+    for (let i = 1; i <= 12; i++) {
+      const id = `-${i < 10 ? `0${i}` : i}-`;
+      const firstIndex = filteredDays.value.findIndex((day) => day.id.includes(id));
+      indices.push(firstIndex);
+    }
+
+    return indices;
+  });
 
   // --------------------------------
   // Computed
@@ -46,6 +68,8 @@ export const useConfigStore = defineStore('config', () => {
     days,
     filteredDays,
     selectedCategory,
+    monthIndices,
+    groupedByMonth,
     setCategory,
     setDays,
   };
