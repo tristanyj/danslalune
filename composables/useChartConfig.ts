@@ -26,6 +26,7 @@ export function useChartConfig() {
   const minRadius = radius * proportions[0] * innerRadiusPadding;
   const restRadius = radius * proportions[0] * (1 - innerRadiusPadding);
   const maxRadius = radius;
+  const radiusPadding = 50;
 
   // ------------------------------
   // Positions
@@ -79,6 +80,7 @@ export function useChartConfig() {
     legend,
     layerCount,
     innerRadiusPadding,
+    radiusPadding,
     scalePositions,
   };
 }

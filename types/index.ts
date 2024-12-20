@@ -30,6 +30,17 @@ export interface Arc {
   data: any;
 }
 
+export interface Area {
+  angle: number;
+  minRadius: number;
+  maxRadius: number;
+}
+
+export interface Point {
+  angle: number;
+  radius: number;
+}
+
 export interface DayArc {
   id: string;
   index: number;

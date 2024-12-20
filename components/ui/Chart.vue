@@ -3,8 +3,10 @@ import * as d3 from 'd3';
 import type { d3GSelection } from '@/types';
 
 const { width, height } = useChartConfig();
-const { drawCircleBackground, drawStatArcs } = useChartDrawArcs();
-const { drawDayLabels } = useChartDrawLabels();
+const { drawCircleBackground, drawMonthArcs, drawCategoryArcs } = useChartDrawArcs();
+// const { drawDayLabels } = useChartDrawLabels();
+const { drawCurveLegend } = useChartDrawLegend();
+const { drawMoonPhaseArea, drawCategoryArea } = useChartDrawAreas();
 const { drawMoonPhaseGradient } = useChartDrawGradient();
 const { drawCircularSeparators, drawLinearSeparators, drawCategoryCurve, drawMoonLines } =
   useChartDrawLines();
@@ -26,21 +28,25 @@ function createVisualization() {
 
   drawMoonPhaseGradient(g.value);
 
+  drawCurveLegend(g.value);
+
   // -----------------
   // BACKGROUND
   // -----------------
 
-  // drawCircleBackground(g.value);
-
+  drawCircleBackground(g.value);
   drawMoonLines(g.value, scales.circle);
+  drawMonthArcs(g.value, scales.circle);
+  drawCategoryArcs(g.value, scales.circle);
+
+  drawMoonPhaseArea(g.value, scales.circle);
 
   drawCircularSeparators(g.value);
+  drawCategoryArea(g.value, scales.circle);
   drawCategoryCurve(g.value, scales.circle);
   drawLinearSeparators(g.value, scales.circle);
 
   // drawDayLabels(g.value, scales.circle);
-
-  // drawStatArcs(g.value, scales.circle, 'base');
 }
 
 const mountToContainer = () => {

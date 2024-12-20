@@ -1,10 +1,7 @@
-import type { d3GSelection, Day } from '~/types';
-
-import { wrapText, shouldFlipText, calcTextLength } from '~/assets/scripts/utils';
+import type { d3GSelection } from '~/types';
 
 export function useChartDrawLabels() {
-  const { radius, minRadius, scalePositions, proportions, wrap } = useChartConfig();
-  const { arcGenerator } = useChartGenerators();
+  const { radius } = useChartConfig();
 
   const configStore = useConfigStore();
   const { filteredDays } = storeToRefs(configStore);
