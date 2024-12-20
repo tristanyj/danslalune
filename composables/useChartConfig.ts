@@ -22,7 +22,7 @@ export function useChartConfig() {
   // ------------------------------
 
   const radius = Math.min(width, height) / 2 - margin;
-  const innerRadiusPadding = 0.5;
+  const innerRadiusPadding = 0.4;
   const minRadius = radius * proportions[0] * innerRadiusPadding;
   const restRadius = radius * proportions[0] * (1 - innerRadiusPadding);
   const maxRadius = radius;
@@ -39,7 +39,7 @@ export function useChartConfig() {
   // ------------------------------
 
   const legend = {
-    columnCount: 10,
+    columnCount: 5,
   };
 
   // ------------------------------

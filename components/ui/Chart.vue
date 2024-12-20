@@ -5,7 +5,9 @@ import type { d3GSelection } from '@/types';
 const { width, height } = useChartConfig();
 const { drawCircleBackground, drawStatArcs } = useChartDrawArcs();
 const { drawDayLabels } = useChartDrawLabels();
-const { drawCircularSeparators, drawLinearSeparators, drawCategoryCurve } = useChartDrawLines();
+const { drawMoonPhaseGradient } = useChartDrawGradient();
+const { drawCircularSeparators, drawLinearSeparators, drawCategoryCurve, drawMoonLines } =
+  useChartDrawLines();
 const { scales, updateScale } = useChartScales();
 
 const configStore = useConfigStore();
@@ -22,11 +24,15 @@ function createVisualization() {
 
   g.value.selectAll('*').remove();
 
+  drawMoonPhaseGradient(g.value);
+
   // -----------------
   // BACKGROUND
   // -----------------
 
   // drawCircleBackground(g.value);
+
+  drawMoonLines(g.value, scales.circle);
 
   drawCircularSeparators(g.value);
   drawCategoryCurve(g.value, scales.circle);

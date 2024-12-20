@@ -8,6 +8,15 @@ export const useConfigStore = defineStore('config', () => {
 
   const selectedCategory = ref<CategoryKey>('velage');
 
+  const colors = {
+    velage: '#FFC107',
+    matrice: '#FF5722',
+    veau_perf: '#4CAF50',
+    agnelage: '#2196F3',
+  };
+
+  const currentColor = computed(() => colors[selectedCategory.value]);
+
   const days = ref<Day[]>([]);
 
   const filteredDays = computed<FilteredDay[]>(() =>
@@ -67,6 +76,7 @@ export const useConfigStore = defineStore('config', () => {
     isLoaded,
     days,
     filteredDays,
+    currentColor,
     selectedCategory,
     monthIndices,
     groupedByMonth,
