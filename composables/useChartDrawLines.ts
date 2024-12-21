@@ -112,7 +112,7 @@ export function useChartDrawLines() {
       createLine(g, {
         className: 'separator',
         y1: minRadius,
-        y2: radius - highestMoon.moon * 1.5,
+        y2: radius - highestMoon.moon - 30,
         transform: `rotate(${180 + (startAngle * 180) / Math.PI})`,
         stroke: 'darkblue',
         opacity: 0.45,

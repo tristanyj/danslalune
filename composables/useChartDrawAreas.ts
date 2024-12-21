@@ -15,7 +15,7 @@ export function useChartDrawAreas() {
     const moonData = filteredDays.value.map((d, i) => {
       return {
         angle: circleScale(i),
-        minRadius: radius - d.moon * 1.5,
+        minRadius: radius - d.moon,
         maxRadius: radius,
       };
     });
