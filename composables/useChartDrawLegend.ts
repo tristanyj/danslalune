@@ -1,5 +1,7 @@
 import type { d3GSelection } from '~/types';
 
+import { createLine } from './useChartDrawLines';
+
 export function useChartDrawLegend() {
   const { radius, minRadius, radiusPadding } = useChartConfig();
 
@@ -30,10 +32,13 @@ export function useChartDrawLegend() {
 
   // Example function to add icons to the visualization
   const drawMoonPhaseIcons = (g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) => {
-    const iconRadius = 15; // Radius of moon icons
-    const iconSpacing = 50; // Spacing between icons
+    const iconRadius = 5; // Radius of moon icons
+    const iconSpacing = 15; // Spacing between icons
 
-    groupedByMonth.value.forEach((group) => {
+    groupedByMonth.value.forEach((group, i) => {
+      console.log(group);
+      const angleOffset = -Math.PI / 2;
+
       // const lowestMoon = group.sort((a, b) => a.moon - b.moon)[0];
       const highestMoon = group.sort((a, b) => b.moon - a.moon)[0];
 
@@ -41,12 +46,24 @@ export function useChartDrawLegend() {
       const highestMoonIndex = filteredDays.value.findIndex((d) => d.id === highestMoon.id);
       console.log(highestMoonIndex);
 
-      const angle = circleScale(highestMoonIndex);
-      console.log(angle);
+      const angle = circleScale(highestMoonIndex) + angleOffset;
+      console.log('Angle in Radians:', angle);
+
+      // createLine(g, {
+      //   className: 'separator',
+      //   y1: minRadius,
+      //   y2: 0,
+      //   transform: `rotate(${180 + (angle * 180) / Math.PI})`,
+      //   stroke: 'darkblue',
+      //   opacity: 0.45,
+      // });
+
       // const startAngleLow = circleScale(lowestMoonIndex);
 
-      const highX = 400 * Math.cos(angle);
-      const highY = 400 * Math.sin(angle);
+      const highX = (radius - highestMoon.moon - iconSpacing) * Math.cos(angle);
+      const highY = (radius - highestMoon.moon - iconSpacing) * Math.sin(angle);
+      console.log(`Position: X=${highX}, Y=${highY}`);
+
       // const lowY = radius - lowestMoon.moon;
       // const lowAngle = 180 + (startAngleLow * 180) / Math.PI;
       // const highAngle = 180 + (startAngle * 180) / Math.PI;

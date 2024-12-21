@@ -40,7 +40,19 @@ export const useConfigStore = defineStore('config', () => {
     return grouped;
   });
 
-  console.log(groupedByMonth);
+  // const highestMoons = computed(() => {
+  //   const indices = [];
+
+  //   groupedByMonth.value.forEach((group, i) => {
+  //     // const lowestMoon = group.sort((a, b) => a.moon - b.moon)[0];
+  //     const highestMoon = group.sort((a, b) => b.moon - a.moon).filter((d, i) => i < 1);
+
+  //     // const lowestMoonIndex = filteredDays.value.findIndex((d) => d.id === lowestMoon.id);
+  //     const highestMoonIndex = filteredDays.value.findIndex((d) => d.id === highestMoon.id);
+  //     console.log(highestMoonIndex);
+
+  //   });
+  // });
 
   const monthIndices = computed(() => {
     const indices = [];

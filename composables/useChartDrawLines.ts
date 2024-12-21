@@ -1,7 +1,7 @@
 // import * as d3Pkg from 'd3';
 import type { d3GSelection, Line } from '~/types';
 
-const createLine = (g: d3GSelection, params: Line) => {
+export const createLine = (g: d3GSelection, params: Line) => {
   g.append('line')
     .attr('class', params.className)
     .attr('x1', 0)
@@ -96,7 +96,8 @@ export function useChartDrawLines() {
       .attr('fill', 'none')
       .attr('stroke', '#777')
       .attr('stroke-width', 1)
-      .attr('d', lineGenerator);
+      .attr('d', lineGenerator)
+      .attr('opacity', 0);
   }
 
   const drawMoonLines = (g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) => {
