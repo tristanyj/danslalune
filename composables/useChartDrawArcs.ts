@@ -37,7 +37,7 @@ export function useChartDrawArcs() {
         : indices[groupIndex + 1] ?? startIndex + groupMonth.length;
 
       const startAngle = circleScale(startIndex);
-      const endAngle = circleScale(nextGroupStartIndex + 1);
+      const endAngle = circleScale(nextGroupStartIndex);
       const midAngle = (startAngle + endAngle) / 2;
 
       const shouldFlip = shouldFlipText(midAngle);
@@ -77,7 +77,7 @@ export function useChartDrawArcs() {
           'd',
           arcGenerator({
             innerRadius: minRadius - 28,
-            outerRadius: radius,
+            outerRadius: radius + 38,
             startAngle,
             endAngle,
             data: null,
