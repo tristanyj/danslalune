@@ -25,7 +25,8 @@ export function useChartDrawArcs() {
       const isLegend = groupIndex + 1 === indices.length + 1;
 
       const month = !isLegend ? MONTHS.find((m) => m.id === id) : null;
-      const groupMonth = groupedByMonth.value[groupIndex - 1];
+      const groupMonth = groupedByMonth.value[groupIndex];
+      console.log(id, month, groupMonth);
       if (!isLegend && (!month || !groupMonth)) continue;
       if (isLegend) continue;
 
@@ -52,7 +53,7 @@ export function useChartDrawArcs() {
         data: null,
       });
 
-      const fontSize = 13;
+      const fontSize = 11;
       const textLength = calcTextLength(g, elId, text, fontSize);
 
       const arcLength = Math.abs(endAngle - startAngle) * labelRadius;

@@ -1,4 +1,5 @@
 // import * as d3 from 'd3';
+import { filter } from 'd3';
 import type { d3GSelection } from '~/types';
 
 export function useChartDrawAreas() {
@@ -12,13 +13,19 @@ export function useChartDrawAreas() {
   const drawMoonPhaseArea = (g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) => {
     const group = g.append('g').attr('class', 'moon-phase-area');
 
-    const moonData = filteredDays.value.map((d, i) => {
-      return {
-        angle: circleScale(i),
-        minRadius: radius - d.moon,
+    const moonData = filteredDays.value
+      .map((d, i) => {
+        return {
+          angle: circleScale(i),
+          minRadius: radius - d.moon,
+          maxRadius: radius,
+        };
+      })
+      .concat({
+        angle: circleScale(filteredDays.value.length),
+        minRadius: radius - filteredDays.value[0].moon - 8,
         maxRadius: radius,
-      };
-    });
+      });
 
     group
       .append('path')
@@ -40,14 +47,22 @@ export function useChartDrawAreas() {
       .y((d) => d.value)
       .bandwidth(0.1);
 
-    const values: [[number, number]] = regressionGenerator(filteredDays.value);
-    const smoothedData = values.map((d, i) => ({
-      angle: circleScale(i),
-      minRadius: minRadius,
-      maxRadius: minRadius + Math.pow(d[1], 1.5) * radiusPadding * 1.75,
-    }));
+    // TODO: change offset based on selected category to prolong the area
+    const offset = 5;
 
-    console.log(smoothedData);
+    const values: [[number, number]] = regressionGenerator(filteredDays.value);
+    const smoothedData = values
+      .map((d, i) => ({
+        angle: circleScale(i),
+        minRadius: minRadius,
+        maxRadius: minRadius + Math.pow(d[1], 1.65) * radiusPadding * 1.75,
+      }))
+      .concat({
+        angle: circleScale(filteredDays.value.length),
+        minRadius: minRadius,
+        maxRadius:
+          minRadius + Math.pow(values[values.length - 1][1], 1.65) * radiusPadding * 1.75 + offset,
+      });
 
     group
       .append('path')
