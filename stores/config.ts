@@ -35,10 +35,12 @@ export const useConfigStore = defineStore('config', () => {
     const grouped = MONTHS.map((month) => {
       const days = filteredDays.value.filter((day) => day.id.includes(`-${month.id}-`));
       return days;
-    });
+    }).filter((month) => month.length > 0);
 
     return grouped;
   });
+
+  console.log(groupedByMonth);
 
   const monthIndices = computed(() => {
     const indices = [];

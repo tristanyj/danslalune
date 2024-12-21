@@ -47,6 +47,8 @@ export function useChartDrawAreas() {
       maxRadius: minRadius + Math.pow(d[1], 1.5) * radiusPadding * 1.75,
     }));
 
+    console.log(smoothedData);
+
     group
       .append('path')
       .datum(smoothedData)

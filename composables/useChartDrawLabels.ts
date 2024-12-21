@@ -19,9 +19,9 @@ export function useChartDrawLabels() {
 
       const textGroup = g.append('g').attr('class', className);
 
-      const text = filteredDays.value[i].id;
+      const text = filteredDays.value[i].id.replace('2023-', '').replace('-', '.');
       const textAnchor = midAngle > Math.PI ? 'end' : 'start';
-      const labelRadius = radius + 10;
+      const labelRadius = radius + 6;
 
       const rotation = (midAngle * 180) / Math.PI - 90 + (midAngle > Math.PI ? 180 : 0);
       const x = labelRadius * Math.cos(midAngle - Math.PI / 2);
@@ -34,7 +34,8 @@ export function useChartDrawLabels() {
         .attr('text-anchor', textAnchor)
         .attr('dominant-baseline', 'middle')
         .attr('fill', '#000')
-        .attr('font-size', 11)
+        .attr('font-size', 10)
+        .attr('opacity', 0.75)
         .attr('transform', `rotate(${rotation},${x},${y})`)
         .text(text);
     }

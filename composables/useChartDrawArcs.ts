@@ -26,7 +26,8 @@ export function useChartDrawArcs() {
 
       const month = !isLegend ? MONTHS.find((m) => m.id === id) : null;
       const groupMonth = groupedByMonth.value[groupIndex - 1];
-      if (!isLegend && !month && !groupMonth) continue;
+      if (!isLegend && (!month || !groupMonth)) continue;
+      if (isLegend) continue;
 
       const startIndex = isLegend ? filteredDays.value.length - 1 : indices[groupIndex];
       const text = isLegend ? 'Mois' : month?.name ?? 'Mois';
@@ -36,12 +37,12 @@ export function useChartDrawArcs() {
         : indices[groupIndex + 1] ?? startIndex + groupMonth.length;
 
       const startAngle = circleScale(startIndex);
-      const endAngle = circleScale(nextGroupStartIndex);
+      const endAngle = circleScale(nextGroupStartIndex + 1);
       const midAngle = (startAngle + endAngle) / 2;
 
       const shouldFlip = shouldFlipText(midAngle);
-      const offset = shouldFlip ? 10 : 0;
-      const labelRadius = radius + offset + 10;
+      const offset = shouldFlip ? -8 : 0;
+      const labelRadius = minRadius - offset - 18;
 
       const textArc = arcGenerator({
         innerRadius: labelRadius,
@@ -75,7 +76,7 @@ export function useChartDrawArcs() {
         .attr(
           'd',
           arcGenerator({
-            innerRadius: minRadius,
+            innerRadius: minRadius - 28,
             outerRadius: radius,
             startAngle,
             endAngle,

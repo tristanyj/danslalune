@@ -40,7 +40,7 @@ export function useChartConfig() {
   // ------------------------------
 
   const legend = {
-    columnCount: 5,
+    columnCount: 0,
   };
 
   // ------------------------------

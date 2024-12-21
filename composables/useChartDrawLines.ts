@@ -34,6 +34,12 @@ export function useChartDrawLines() {
       .attr('fill', 'none')
       .attr('stroke', color.separator.stroke)
       .attr('stroke-opacity', color.separator.highOpacity);
+
+    g.append('circle')
+      .attr('r', minRadius - 28)
+      .attr('fill', 'none')
+      .attr('stroke', color.separator.stroke)
+      .attr('stroke-opacity', 0.15);
   }
 
   function drawLinearSeparators(g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) {

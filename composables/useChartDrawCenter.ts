@@ -7,7 +7,7 @@ export function useChartDrawCenter() {
   const { openPicker, setHoveredCategory } = useInteractionStore();
 
   const { arcGenerator } = useChartGenerators();
-  const { width, height, minRadius, modifier } = useChartConfig();
+  const { width, height, minRadius } = useChartConfig();
 
   function drawBackground(g: d3GSelection) {
     g.append('rect')
