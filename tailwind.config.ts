@@ -7,7 +7,7 @@ export default <Partial<Config>>{
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
         anton: ['Anton', 'sans-serif'],
-        host: ['Host Grotesk', 'sans-serif'],
+        bodoni: ['Bodoni Moda', 'sans-serif'],
       },
       colors: {
         primary: amber,
