@@ -9,6 +9,7 @@ const { isLoaded } = storeToRefs(configStore);
   <div class="grid content">
     <div class="relative">
       <UiPicker />
+      <h1 class="">lol</h1>
       <div class="relative px-4">
         <UiChart v-if="isLoaded" />
         <div

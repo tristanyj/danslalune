@@ -9,12 +9,22 @@ export function useChartDrawLegend() {
   const { currentColor, filteredDays, groupedByMonth } = storeToRefs(configStore);
 
   const drawNewMoon = (g: d3GSelection, cx: number, cy: number, radius: number) => {
-    g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', radius).attr('fill', 'black');
+    g.append('circle')
+      .attr('cx', cx)
+      .attr('cy', cy)
+      .attr('r', radius)
+      .attr('stroke', 'black')
+      .attr('fill', 'none');
   };
 
   // Function to draw a full moon (white circle)
   const drawFullMoon = (g: d3GSelection, cx: number, cy: number, radius: number) => {
-    g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', radius).attr('fill', 'black');
+    g.append('circle')
+      .attr('cx', cx)
+      .attr('cy', cy)
+      .attr('r', radius)
+      .attr('stroke', 'black')
+      .attr('fill', 'black');
   };
 
   // Function to draw a half moon
@@ -36,41 +46,24 @@ export function useChartDrawLegend() {
     const iconSpacing = 15; // Spacing between icons
 
     groupedByMonth.value.forEach((group, i) => {
-      console.log(group);
       const angleOffset = -Math.PI / 2;
 
-      // const lowestMoon = group.sort((a, b) => a.moon - b.moon)[0];
+      const lowestMoon = group.sort((a, b) => a.moon - b.moon)[0];
       const highestMoon = group.sort((a, b) => b.moon - a.moon)[0];
 
-      // const lowestMoonIndex = filteredDays.value.findIndex((d) => d.id === lowestMoon.id);
+      const lowestMoonIndex = filteredDays.value.findIndex((d) => d.id === lowestMoon.id);
       const highestMoonIndex = filteredDays.value.findIndex((d) => d.id === highestMoon.id);
-      console.log(highestMoonIndex);
 
-      const angle = circleScale(highestMoonIndex) + angleOffset;
-      console.log('Angle in Radians:', angle);
+      const angleHigh = circleScale(highestMoonIndex) + angleOffset;
+      const angleLow = circleScale(lowestMoonIndex) + angleOffset;
 
-      // createLine(g, {
-      //   className: 'separator',
-      //   y1: minRadius,
-      //   y2: 0,
-      //   transform: `rotate(${180 + (angle * 180) / Math.PI})`,
-      //   stroke: 'darkblue',
-      //   opacity: 0.45,
-      // });
+      const highX = (radius - highestMoon.moon - iconSpacing) * Math.cos(angleHigh);
+      const highY = (radius - highestMoon.moon - iconSpacing) * Math.sin(angleHigh);
 
-      // const startAngleLow = circleScale(lowestMoonIndex);
+      const lowX = (radius - lowestMoon.moon - iconSpacing) * Math.cos(angleLow);
+      const lowY = (radius - lowestMoon.moon - iconSpacing) * Math.sin(angleLow);
 
-      const highX = (radius - highestMoon.moon - iconSpacing) * Math.cos(angle);
-      const highY = (radius - highestMoon.moon - iconSpacing) * Math.sin(angle);
-      console.log(`Position: X=${highX}, Y=${highY}`);
-
-      // const lowY = radius - lowestMoon.moon;
-      // const lowAngle = 180 + (startAngleLow * 180) / Math.PI;
-      // const highAngle = 180 + (startAngle * 180) / Math.PI;
-
-      // const lowX = radius * Math.cos(startAngleLow);
-
-      // drawNewMoon(g, highX, highY, iconRadius);
+      drawNewMoon(g, lowX, lowY, iconRadius);
       // drawHalfMoon(g, lowX, lowY, iconRadius);
       drawFullMoon(g, highX, highY, iconRadius);
     });
