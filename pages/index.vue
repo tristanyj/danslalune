@@ -10,11 +10,11 @@ const { isLoaded } = storeToRefs(configStore);
     <div class="relative p-2">
       <div class="grid border-2 border-gray-900">
         <div
-          class="grid grid-flow-col justify-between items-center border-b-2 border-gray-900 p-5 py-2"
+          class="grid grid-cols-3 justify-between items-center border-b-2 border-gray-900 p-5 py-2"
         >
           <div class="">left</div>
-          <div class="">Est-ce que la lune influence les vêlages ?</div>
-          <div class="">right</div>
+          <div class="flex justify-center">Est-ce que la lune influence les vêlages ?</div>
+          <div class="flex justify-end">right</div>
         </div>
         <div class="grid grid-cols-[1fr,2fr] items-start gap-10">
           <div class="grid gap-2 p-5 font-bodoni">
@@ -52,11 +52,11 @@ const { isLoaded } = storeToRefs(configStore);
           </div>
         </div>
         <div
-          class="grid grid-flow-col justify-between items-center border-t-2 border-gray-900 p-5 py-2"
+          class="grid grid-cols-3 justify-between items-center border-t-2 border-gray-900 p-5 py-2"
         >
-          <div class="">2024</div>
-          <div class="">Créé par Tristan Lanoye.</div>
-          <div class="">Data par la clinique des Bastides</div>
+          <div class="">Date</div>
+          <div class="flex justify-center">Created by</div>
+          <div class="flex justify-end">Data from</div>
         </div>
       </div>
     </div>

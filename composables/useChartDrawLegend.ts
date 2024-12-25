@@ -216,7 +216,7 @@ export function useChartDrawLegend() {
       barY1 = -391;
       barY2 = barY1 - 25;
 
-      areaX1 = 292;
+      areaX1 = 296;
       areaX2 = areaX1 + 30;
       areaY1 = -339;
       areaY2 = areaY1 - 25;
