@@ -70,7 +70,7 @@ export function useChartDrawAreas() {
       .append('path')
       .datum(smoothedData)
       .attr('fill', currentColor.value)
-      .attr('opacity', 0.5)
+      .attr('opacity', 0.35)
       .attr('d', areaGenerator);
   };
 

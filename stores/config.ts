@@ -9,9 +9,9 @@ export const useConfigStore = defineStore('config', () => {
   const selectedCategory = ref<CategoryKey>('velage');
 
   const colors = {
-    velage: '#FFC107',
-    matrice: '#FF5722',
-    veau_perf: '#4CAF50',
+    velage: '#d90368',
+    matrice: '#fb8b24',
+    veau_perf: '#6a994e',
   };
 
   const coef = {

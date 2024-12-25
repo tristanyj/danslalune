@@ -10,7 +10,7 @@ export function useChartDrawArcs() {
   const { arcGenerator } = useChartGenerators();
 
   const configStore = useConfigStore();
-  const { filteredDays, monthIndices, groupedByMonth } = storeToRefs(configStore);
+  const { filteredDays, monthIndices, groupedByMonth, currentColor } = storeToRefs(configStore);
 
   const drawCircleBackground = (g: d3GSelection) => {
     g.append('circle').attr('cx', 0).attr('cy', 0).attr('r', radius).attr('fill', '#fff');
@@ -43,7 +43,7 @@ export function useChartDrawArcs() {
 
       const shouldFlip = shouldFlipText(midAngle);
       const offset = shouldFlip ? -8 : 0;
-      const labelRadius = minRadius - offset - 18;
+      const labelRadius = minRadius - offset - 20;
 
       const textArc = arcGenerator({
         innerRadius: labelRadius,
@@ -53,7 +53,7 @@ export function useChartDrawArcs() {
         data: null,
       });
 
-      const fontSize = 11;
+      const fontSize = 12;
       const textLength = calcTextLength(g, elId, text, fontSize);
 
       const arcLength = Math.abs(endAngle - startAngle) * labelRadius;
@@ -103,7 +103,7 @@ export function useChartDrawArcs() {
         endAngle,
         data: d,
       });
-      group.append('path').attr('d', arc).attr('fill', 'red').attr('opacity', 0.5);
+      group.append('path').attr('d', arc).attr('fill', currentColor.value).attr('opacity', 1);
     }
   };
 
