@@ -2,7 +2,7 @@
 // Dataset
 // --------------------------------
 
-export type CategoryKey = 'velage' | 'matrice' | 'veau_perf' | 'agnelage';
+export type CategoryKey = 'velage' | 'matrice' | 'veau_perf';
 
 export interface Day extends Record<CategoryKey, number> {
   date: string;

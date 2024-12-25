@@ -1,5 +1,5 @@
 // import * as d3 from 'd3';
-import { filter } from 'd3';
+// import { filter } from 'd3';
 import type { d3GSelection } from '~/types';
 
 export function useChartDrawAreas() {
@@ -8,7 +8,7 @@ export function useChartDrawAreas() {
   const { areaGenerator } = useChartGenerators();
 
   const configStore = useConfigStore();
-  const { filteredDays, currentColor } = storeToRefs(configStore);
+  const { filteredDays, currentColor, currentCoef } = storeToRefs(configStore);
 
   const drawMoonPhaseArea = (g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) => {
     const group = g.append('g').attr('class', 'moon-phase-area');
@@ -55,13 +55,15 @@ export function useChartDrawAreas() {
       .map((d, i) => ({
         angle: circleScale(i),
         minRadius: minRadius,
-        maxRadius: minRadius + Math.pow(d[1], 1.65) * radiusPadding * 1.75,
+        maxRadius: minRadius + Math.pow(d[1], 1.6) * radiusPadding * currentCoef.value,
       }))
       .concat({
         angle: circleScale(filteredDays.value.length),
         minRadius: minRadius,
         maxRadius:
-          minRadius + Math.pow(values[values.length - 1][1], 1.65) * radiusPadding * 1.75 + offset,
+          minRadius +
+          Math.pow(values[values.length - 1][1], 1.6) * radiusPadding * currentCoef.value +
+          offset,
       });
 
     group

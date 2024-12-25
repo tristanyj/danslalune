@@ -13,12 +13,12 @@ const { isLoaded } = storeToRefs(configStore);
           class="grid grid-flow-col justify-between items-center border-b-2 border-gray-900 p-5 py-2"
         >
           <div class="">left</div>
-          <div class="">middle</div>
+          <div class="">Est-ce que la lune influence les vêlages ?</div>
           <div class="">right</div>
         </div>
         <div class="grid grid-cols-[1fr,2fr] items-start gap-10">
           <div class="grid gap-2 p-5 font-bodoni">
-            <h1 class="text-7xl">Does the phases of the moon impact cow births ?</h1>
+            <h1 class="text-7xl">Est-ce que la lune influence les vêlages ?</h1>
             <div class="grid gap-2 pt-7">
               <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat minus deleniti
@@ -38,7 +38,7 @@ const { isLoaded } = storeToRefs(configStore);
             </div>
           </div>
           <div class="">
-            <!-- <UiPicker /> -->
+            <UiPicker />
             <div class="relative px-4">
               <UiChart v-if="isLoaded" />
               <div
@@ -54,9 +54,9 @@ const { isLoaded } = storeToRefs(configStore);
         <div
           class="grid grid-flow-col justify-between items-center border-t-2 border-gray-900 p-5 py-2"
         >
-          <div class="">left</div>
-          <div class="">middle</div>
-          <div class="">right</div>
+          <div class="">2024</div>
+          <div class="">Créé par Tristan Lanoye.</div>
+          <div class="">Data par la clinique des Bastides</div>
         </div>
       </div>
     </div>

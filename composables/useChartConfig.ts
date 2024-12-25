@@ -40,7 +40,7 @@ export function useChartConfig() {
   // ------------------------------
 
   const legend = {
-    columnCount: 10,
+    columnCount: 5,
   };
 
   // ------------------------------
@@ -61,9 +61,15 @@ export function useChartConfig() {
 
   const color = {
     separator: {
-      stroke: '#000',
+      stroke: '#168aad',
       highOpacity: 0.5,
     },
+  };
+
+  const coefficient = {
+    velage: 1,
+    matrice: 1,
+    veau_perf: 1,
   };
 
   return {
@@ -82,5 +88,6 @@ export function useChartConfig() {
     innerRadiusPadding,
     radiusPadding,
     scalePositions,
+    coefficient,
   };
 }

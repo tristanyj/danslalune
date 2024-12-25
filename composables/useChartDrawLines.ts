@@ -15,7 +15,7 @@ export const createLine = (g: d3GSelection, params: Line) => {
 };
 
 export function useChartDrawLines() {
-  const { radius, minRadius, color, radiusPadding } = useChartConfig();
+  const { radius, minRadius, color, radiusPadding, legend } = useChartConfig();
 
   const { lineGenerator } = useChartGenerators();
 
@@ -27,7 +27,7 @@ export function useChartDrawLines() {
       .attr('r', minRadius)
       .attr('fill', 'none')
       .attr('stroke', color.separator.stroke)
-      .attr('stroke-opacity', color.separator.highOpacity);
+      .attr('stroke-opacity', 1);
 
     g.append('circle')
       .attr('r', radius)
@@ -36,10 +36,22 @@ export function useChartDrawLines() {
       .attr('stroke-opacity', color.separator.highOpacity);
 
     g.append('circle')
+      .attr('r', 20)
+      .attr('fill', 'none')
+      .attr('stroke', color.separator.stroke)
+      .attr('stroke-opacity', 0.1);
+
+    g.append('circle')
+      .attr('r', radius + 38)
+      .attr('fill', 'none')
+      .attr('stroke', color.separator.stroke)
+      .attr('stroke-opacity', 1);
+
+    g.append('circle')
       .attr('r', minRadius - 28)
       .attr('fill', 'none')
       .attr('stroke', color.separator.stroke)
-      .attr('stroke-opacity', 0.15);
+      .attr('stroke-opacity', 0.25);
   }
 
   function drawLinearSeparators(g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) {
@@ -57,29 +69,27 @@ export function useChartDrawLines() {
       });
     }
 
-    // const group = g.append('g').attr('class', 'separator-lines');
+    const group = g.append('g').attr('class', 'separator-lines');
 
-    // monthIndices.value.forEach((index) => {
-    //   const startAngle = circleScale(index);
+    createLine(group, {
+      className: 'separator',
+      y1: minRadius,
+      y2: radius + 25,
+      transform: `rotate(${
+        180 + (circleScale(filteredDays.value.length + legend.columnCount) * 180) / Math.PI
+      })`,
+      stroke: color.separator.stroke,
+      opacity: 0.05,
+    });
 
-    //   createLine(group, {
-    //     className: 'separator',
-    //     y1: minRadius,
-    //     y2: radius + 25,
-    //     transform: `rotate(${180 + (startAngle * 180) / Math.PI})`,
-    //     stroke: color.separator.stroke,
-    //     opacity: 0.1,
-    //   });
-    // });
-
-    // createLine(g, {
-    //   className: 'separator',
-    //   y1: minRadius,
-    //   y2: radius + 25,
-    //   transform: `rotate(${180 + (circleScale(filteredDays.value.length - 1) * 180) / Math.PI})`,
-    //   stroke: color.separator.stroke,
-    //   opacity: 0.1,
-    // });
+    createLine(group, {
+      className: 'separator',
+      y1: minRadius,
+      y2: radius + 25,
+      transform: `rotate(${180 + (circleScale(filteredDays.value.length) * 180) / Math.PI})`,
+      stroke: color.separator.stroke,
+      opacity: 0.05,
+    });
   }
 
   function drawCategoryCurve(g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) {
@@ -115,8 +125,9 @@ export function useChartDrawLines() {
         y1: minRadius,
         y2: radius - highestMoon.moon - 30,
         transform: `rotate(${180 + (startAngle * 180) / Math.PI})`,
-        stroke: 'darkblue',
-        opacity: 0.45,
+        stroke: color.separator.stroke,
+        strokeWidth: 1.5,
+        opacity: 0.5,
       });
 
       const startAngleLow = circleScale(lowestMoonIndex);
@@ -129,6 +140,22 @@ export function useChartDrawLines() {
         stroke: color.separator.stroke,
         opacity: 0.15,
       });
+    });
+
+    const day = filteredDays.value.find((d) => d.id === '2023-08-01');
+    const dayIndex = filteredDays.value.findIndex((d) => d.id === '2023-08-01');
+    if (!day) return;
+
+    const startAngle = circleScale(dayIndex);
+
+    createLine(g, {
+      className: 'separator',
+      y1: minRadius,
+      y2: radius - day.moon - 30,
+      transform: `rotate(${180 + (startAngle * 180) / Math.PI})`,
+      stroke: color.separator.stroke,
+      strokeWidth: 1.5,
+      opacity: 0.5,
     });
   };
 

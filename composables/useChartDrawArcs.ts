@@ -77,7 +77,7 @@ export function useChartDrawArcs() {
         .attr(
           'd',
           arcGenerator({
-            innerRadius: minRadius - 28,
+            innerRadius: 20,
             outerRadius: radius + 38,
             startAngle,
             endAngle,

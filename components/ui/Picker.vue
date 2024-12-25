@@ -23,10 +23,6 @@ const categories: Category[] = [
     name: 'veau_perf',
     title: 'veau perf',
   },
-  {
-    name: 'agnelage',
-    title: 'agnelage',
-  },
 ];
 </script>
 

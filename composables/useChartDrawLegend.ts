@@ -1,9 +1,10 @@
+import { calcTextLength } from '~/assets/scripts/utils';
 import type { d3GSelection } from '~/types';
 
-import { createLine } from './useChartDrawLines';
-
 export function useChartDrawLegend() {
-  const { radius, minRadius, radiusPadding } = useChartConfig();
+  const { radius, minRadius, radiusPadding, legend } = useChartConfig();
+
+  const { arcGenerator } = useChartGenerators();
 
   const configStore = useConfigStore();
   const { currentColor, filteredDays, groupedByMonth } = storeToRefs(configStore);
@@ -17,7 +18,6 @@ export function useChartDrawLegend() {
       .attr('fill', 'none');
   };
 
-  // Function to draw a full moon (white circle)
   const drawFullMoon = (g: d3GSelection, cx: number, cy: number, radius: number) => {
     g.append('circle')
       .attr('cx', cx)
@@ -27,48 +27,45 @@ export function useChartDrawLegend() {
       .attr('fill', 'black');
   };
 
-  // Function to draw a half moon
-  const drawHalfMoon = (g: d3GSelection, cx: number, cy: number, radius: number) => {
-    // Full moon circle
-    g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', radius).attr('fill', 'white');
-
-    // Overlay a dark circle to create the half-moon effect
-    g.append('circle')
-      .attr('cx', cx + radius / 2) // Adjust this to create the half-moon effect
-      .attr('cy', cy)
-      .attr('r', radius)
-      .attr('fill', 'black');
-  };
-
-  // Example function to add icons to the visualization
   const drawMoonPhaseIcons = (g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) => {
-    const iconRadius = 5; // Radius of moon icons
-    const iconSpacing = 15; // Spacing between icons
+    const iconRadius = 5;
+    const iconSpacing = 15;
 
-    groupedByMonth.value.forEach((group, i) => {
-      const angleOffset = -Math.PI / 2;
+    const getCoordinates = (index: number, value: number, offset: number) => {
+      const angle = circleScale(index) + offset;
 
+      const highX = (radius - value - iconSpacing) * Math.cos(angle);
+      const highY = (radius - value - iconSpacing) * Math.sin(angle);
+
+      return { x: highX, y: highY };
+    };
+
+    const angleOffset = -Math.PI / 2;
+
+    groupedByMonth.value.forEach((group) => {
       const lowestMoon = group.sort((a, b) => a.moon - b.moon)[0];
       const highestMoon = group.sort((a, b) => b.moon - a.moon)[0];
 
       const lowestMoonIndex = filteredDays.value.findIndex((d) => d.id === lowestMoon.id);
       const highestMoonIndex = filteredDays.value.findIndex((d) => d.id === highestMoon.id);
 
-      const angleHigh = circleScale(highestMoonIndex) + angleOffset;
-      const angleLow = circleScale(lowestMoonIndex) + angleOffset;
-
-      const highX = (radius - highestMoon.moon - iconSpacing) * Math.cos(angleHigh);
-      const highY = (radius - highestMoon.moon - iconSpacing) * Math.sin(angleHigh);
-
-      const lowX = (radius - lowestMoon.moon - iconSpacing) * Math.cos(angleLow);
-      const lowY = (radius - lowestMoon.moon - iconSpacing) * Math.sin(angleLow);
+      const { x: lowX, y: lowY } = getCoordinates(lowestMoonIndex, lowestMoon.moon, angleOffset);
+      const { x: highX, y: highY } = getCoordinates(
+        highestMoonIndex,
+        highestMoon.moon,
+        angleOffset
+      );
 
       drawNewMoon(g, lowX, lowY, iconRadius);
-      // drawHalfMoon(g, lowX, lowY, iconRadius);
       drawFullMoon(g, highX, highY, iconRadius);
     });
 
-    // Draw each moon phase icon
+    const day = filteredDays.value.find((d) => d.id === '2023-08-01');
+    const dayIndex = filteredDays.value.findIndex((d) => d.id === '2023-08-01');
+    if (!day) return;
+
+    const { x: highX, y: highY } = getCoordinates(dayIndex, day.moon, angleOffset);
+    drawFullMoon(g, highX, highY, iconRadius);
   };
 
   const drawCurveLegend = (g: d3GSelection) => {
@@ -84,8 +81,50 @@ export function useChartDrawLegend() {
     }
   };
 
+  const drawRingsLegend = (g: d3GSelection, circleScale: d3.ScaleLinear<number, number>) => {
+    const startAngle = circleScale(0 - legend.columnCount * 2);
+    const endAngle = circleScale(0 + legend.columnCount);
+
+    for (let i = 0; i < 7; i++) {
+      const id = `legend-${i}`;
+
+      const labelRadius = minRadius + i * radiusPadding + 4;
+
+      const fontSize = 12;
+      const textLength = calcTextLength(g, id, i.toString(), fontSize);
+
+      const arcLength = Math.abs(endAngle - startAngle) * labelRadius;
+      const textPercentage = (textLength / arcLength) * 100;
+      const restPercentage = 100 - textPercentage;
+      const textOffsetPercentage = restPercentage / 4;
+
+      g.append('path')
+        .attr('id', id)
+        .attr(
+          'd',
+          arcGenerator({
+            innerRadius: labelRadius,
+            outerRadius: labelRadius,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            data: null,
+          })
+        )
+        .attr('fill', 'none');
+
+      g.append('text')
+        .append('textPath')
+        .attr('href', `#${id}`)
+        .attr('startOffset', `${textOffsetPercentage}%`)
+        .style('font-size', fontSize)
+        .text(i.toString())
+        .attr('opacity', 0.75);
+    }
+  };
+
   return {
     drawCurveLegend,
     drawMoonPhaseIcons,
+    drawRingsLegend,
   };
 }

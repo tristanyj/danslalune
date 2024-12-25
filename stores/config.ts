@@ -12,10 +12,16 @@ export const useConfigStore = defineStore('config', () => {
     velage: '#FFC107',
     matrice: '#FF5722',
     veau_perf: '#4CAF50',
-    agnelage: '#2196F3',
+  };
+
+  const coef = {
+    velage: 2.25,
+    matrice: 3,
+    veau_perf: 1.15,
   };
 
   const currentColor = computed(() => colors[selectedCategory.value]);
+  const currentCoef = computed(() => coef[selectedCategory.value]);
 
   const days = ref<Day[]>([]);
 
@@ -77,6 +83,7 @@ export const useConfigStore = defineStore('config', () => {
   // --------------------------------
 
   const setDays = (d: Day[]) => {
+    console.log(d);
     days.value = d.map((day) => ({
       ...day,
     }));
@@ -91,6 +98,7 @@ export const useConfigStore = defineStore('config', () => {
     days,
     filteredDays,
     currentColor,
+    currentCoef,
     selectedCategory,
     monthIndices,
     groupedByMonth,
