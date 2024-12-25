@@ -25,7 +25,7 @@ const { isLoaded, selectedCategory, currentColor } = storeToRefs(configStore);
           </div>
         </div>
         <div class="grid items-start gap-10">
-          <div class="grid grid-cols-[2fr,3fr] items-start gap-10 p-6">
+          <div class="grid grid-cols-2 items-start gap-10 p-6">
             <h1 class="text-7xl font-bodoni leading-[1.15]">
               Est-ce que les phases de la lune influencent les
               <span :style="{ backgroundColor: `${currentColor}19` }">
@@ -39,23 +39,24 @@ const { isLoaded, selectedCategory, currentColor } = storeToRefs(configStore);
             </h1>
             <div class="grid gap-2 pt-5">
               <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat minus deleniti
-                ratione recusandae magni, accusamus, aliquid inventore, placeat optio in iusto
-                aperiam repudiandae debitis voluptatem amet consequatur sit nam sapiente.
+                Depuis des générations, de nombreux éleveurs sont convaincus que les phases de la
+                lune influencent non seulement le comportement des animaux, mais aussi des
+                événements clés tels que les vêlages et les interventions vétérinaires. Ce projet de
+                data visualisation explore cette croyance en examinant les corrélations possibles
+                entre les cycles lunaires et les activités d'élevage.
               </p>
               <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat minus deleniti
-                ratione recusandae magni, accusamus, aliquid inventore, placeat optio in iusto
-                aperiam repudiandae debitis voluptatem amet consequatur sit nam sapiente.
+                Les données proviennent d'une clinique vétérinaire située en Aveyron et représentent
+                trois types d'intervention effectuées durant l'année 2023 : les vêlages, les
+                matrices et les perfusions de veau.
               </p>
               <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat minus deleniti
-                ratione recusandae magni, accusamus, aliquid inventore, placeat optio in iusto
-                aperiam repudiandae debitis voluptatem amet consequatur sit nam sapiente.
+                En comparant les pics d'activité de chaque catégorie avec les phases de la lune,
+                découvrez par vous-même si la croyance populaire est fondée ou non.
               </p>
             </div>
           </div>
-          <div class="grid gap-10 justify-center pb-10">
+          <div class="grid gap-8 justify-center pb-10">
             <UiPicker />
             <div class="relative px-4">
               <UiChart v-if="isLoaded" />
