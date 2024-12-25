@@ -42,8 +42,8 @@ export function useChartDrawArcs() {
       const midAngle = (startAngle + endAngle) / 2;
 
       const shouldFlip = shouldFlipText(midAngle);
-      const offset = shouldFlip ? -8 : 0;
-      const labelRadius = minRadius - offset - 20;
+      const offset = shouldFlip ? -9 : 0;
+      const labelRadius = minRadius - offset - 19;
 
       const textArc = arcGenerator({
         innerRadius: labelRadius,
@@ -77,7 +77,7 @@ export function useChartDrawArcs() {
         .attr(
           'd',
           arcGenerator({
-            innerRadius: 20,
+            innerRadius: minRadius - 28,
             outerRadius: radius + 38,
             startAngle,
             endAngle,

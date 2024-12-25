@@ -1,5 +1,18 @@
 import { calcTextLength } from '~/assets/scripts/utils';
-import type { d3GSelection } from '~/types';
+import type { d3GSelection, Line } from '~/types';
+
+export const createLine = (g: d3GSelection, params: Line & { x1: number; x2: number }) => {
+  g.append('line')
+    .attr('class', params.className)
+    .attr('x1', params.x1)
+    .attr('y1', params.y1)
+    .attr('x2', params.x2)
+    .attr('y2', params.y2)
+    .attr('stroke', params.stroke ?? '#000')
+    .attr('opacity', params.opacity ?? 1)
+    .attr('stroke-width', params.strokeWidth ?? 1)
+    .attr('transform', '');
+};
 
 export function useChartDrawLegend() {
   const { radius, minRadius, radiusPadding, legend } = useChartConfig();
@@ -122,9 +135,54 @@ export function useChartDrawLegend() {
     }
   };
 
+  const drawMoonLegend = (g: d3GSelection) => {
+    const newMoonX1 = -220;
+    const newMoonY1 = -585;
+    const newMoonX2 = newMoonX1 + 30;
+    const newMoonY2 = newMoonY1 + 25;
+
+    const fullMoonX1 = -77;
+    const fullMoonY1 = -523;
+    const fullMoonX2 = fullMoonX1 - 30;
+    const fullMoonY2 = fullMoonY1 + 25;
+
+    createLine(g, {
+      className: 'separator',
+      x1: newMoonX1,
+      x2: newMoonX2,
+      y1: newMoonY1,
+      y2: newMoonY2,
+      stroke: 'black',
+      transform: '',
+    });
+
+    createLine(g, {
+      className: 'separator',
+      x1: fullMoonX1,
+      x2: fullMoonX2,
+      y1: fullMoonY1,
+      y2: fullMoonY2,
+      stroke: 'black',
+      transform: '',
+    });
+
+    g.append('text')
+      .attr('x', newMoonX2 - 25)
+      .attr('y', newMoonY2 + 15)
+      .text('New Moon')
+      .style('font-size', 12);
+
+    g.append('text')
+      .attr('x', fullMoonX2 - 25)
+      .attr('y', fullMoonY2 + 15)
+      .text('Full Moon')
+      .style('font-size', 12);
+  };
+
   return {
     drawCurveLegend,
     drawMoonPhaseIcons,
     drawRingsLegend,
+    drawMoonLegend,
   };
 }

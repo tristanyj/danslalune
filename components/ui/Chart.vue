@@ -5,7 +5,8 @@ import type { d3GSelection } from '@/types';
 const { width, height } = useChartConfig();
 const { drawCircleBackground, drawMonthArcs, drawCategoryArcs } = useChartDrawArcs();
 const { drawDayLabels } = useChartDrawLabels();
-const { drawCurveLegend, drawMoonPhaseIcons, drawRingsLegend } = useChartDrawLegend();
+const { drawCurveLegend, drawMoonPhaseIcons, drawRingsLegend, drawMoonLegend } =
+  useChartDrawLegend();
 const { drawMoonPhaseArea, drawCategoryArea } = useChartDrawAreas();
 const { drawMoonPhaseGradient } = useChartDrawGradient();
 const { drawCircularSeparators, drawLinearSeparators, drawCategoryCurve, drawMoonLines } =
@@ -46,6 +47,7 @@ function createVisualization() {
   drawCategoryCurve(g.value, scales.circle);
   drawLinearSeparators(g.value, scales.circle);
   drawMoonPhaseIcons(g.value, scales.circle);
+  drawMoonLegend(g.value);
 
   drawDayLabels(g.value, scales.circle);
 }
