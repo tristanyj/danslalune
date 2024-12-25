@@ -20,7 +20,7 @@ export function useChartDrawLegend() {
   const { arcGenerator } = useChartGenerators();
 
   const configStore = useConfigStore();
-  const { currentColor, filteredDays, groupedByMonth } = storeToRefs(configStore);
+  const { currentColor, filteredDays, groupedByMonth, selectedCategory } = storeToRefs(configStore);
 
   const drawNewMoon = (g: d3GSelection, cx: number, cy: number, radius: number) => {
     g.append('circle')
@@ -179,10 +179,87 @@ export function useChartDrawLegend() {
       .style('font-size', 12);
   };
 
+  const drawAreaLegend = (g: d3GSelection) => {
+    let barX1 = 0;
+    let barX2 = 0;
+    let barY1 = 0;
+    let barY2 = 0;
+
+    let areaX1 = 0;
+    let areaX2 = 0;
+    let areaY1 = 0;
+    let areaY2 = 0;
+
+    if (selectedCategory.value === 'velage') {
+      barX1 = 80;
+      barX2 = barX1 + 30;
+      barY1 = -385;
+      barY2 = barY1 - 25;
+
+      areaX1 = 155;
+      areaX2 = areaX1 + 30;
+      areaY1 = -303;
+      areaY2 = areaY1 - 25;
+    } else if (selectedCategory.value === 'matrice') {
+      barX1 = 28;
+      barX2 = barX1 + 30;
+      barY1 = -295;
+      barY2 = barY1 - 25;
+
+      areaX1 = 239;
+      areaX2 = areaX1 + 30;
+      areaY1 = -153;
+      areaY2 = areaY1 - 25;
+    } else if (selectedCategory.value === 'veau_perf') {
+      barX1 = 102;
+      barX2 = barX1 + 30;
+      barY1 = -391;
+      barY2 = barY1 - 25;
+
+      areaX1 = 292;
+      areaX2 = areaX1 + 30;
+      areaY1 = -339;
+      areaY2 = areaY1 - 25;
+    }
+
+    createLine(g, {
+      className: 'separator',
+      x1: barX1,
+      x2: barX2,
+      y1: barY1,
+      y2: barY2,
+      stroke: 'black',
+      transform: '',
+    });
+
+    createLine(g, {
+      className: 'separator',
+      x1: areaX1,
+      x2: areaX2,
+      y1: areaY1,
+      y2: areaY2,
+      stroke: 'black',
+      transform: '',
+    });
+
+    g.append('text')
+      .attr('x', barX2 - 16)
+      .attr('y', barY2 - 8)
+      .text("Nombre d'actes par jour")
+      .style('font-size', 12);
+
+    g.append('text')
+      .attr('x', areaX2 - 20)
+      .attr('y', areaY2 - 8)
+      .text('Courbe de tendance')
+      .style('font-size', 12);
+  };
+
   return {
     drawCurveLegend,
     drawMoonPhaseIcons,
     drawRingsLegend,
     drawMoonLegend,
+    drawAreaLegend,
   };
 }
