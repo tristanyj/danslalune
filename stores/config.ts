@@ -8,11 +8,11 @@ export const useConfigStore = defineStore('config', () => {
 
   const selectedCategory = ref<CategoryKey>('velage');
 
-  const colors = {
+  const colors = ref<Record<CategoryKey, string>>({
     velage: '#d90368',
     matrice: '#fb8b24',
     veau_perf: '#6a994e',
-  };
+  });
 
   const coef = {
     velage: 2.25,
@@ -20,7 +20,7 @@ export const useConfigStore = defineStore('config', () => {
     veau_perf: 1.18,
   };
 
-  const currentColor = computed(() => colors[selectedCategory.value]);
+  const currentColor = computed(() => colors.value[selectedCategory.value]);
   const currentCoef = computed(() => coef[selectedCategory.value]);
 
   const days = ref<Day[]>([]);
@@ -46,20 +46,6 @@ export const useConfigStore = defineStore('config', () => {
     return grouped;
   });
 
-  // const highestMoons = computed(() => {
-  //   const indices = [];
-
-  //   groupedByMonth.value.forEach((group, i) => {
-  //     // const lowestMoon = group.sort((a, b) => a.moon - b.moon)[0];
-  //     const highestMoon = group.sort((a, b) => b.moon - a.moon).filter((d, i) => i < 1);
-
-  //     // const lowestMoonIndex = filteredDays.value.findIndex((d) => d.id === lowestMoon.id);
-  //     const highestMoonIndex = filteredDays.value.findIndex((d) => d.id === highestMoon.id);
-  //     console.log(highestMoonIndex);
-
-  //   });
-  // });
-
   const monthIndices = computed(() => {
     const indices = [];
 
@@ -83,7 +69,6 @@ export const useConfigStore = defineStore('config', () => {
   // --------------------------------
 
   const setDays = (d: Day[]) => {
-    console.log(d);
     days.value = d.map((day) => ({
       ...day,
     }));
@@ -97,6 +82,7 @@ export const useConfigStore = defineStore('config', () => {
     isLoaded,
     days,
     filteredDays,
+    colors,
     currentColor,
     currentCoef,
     selectedCategory,

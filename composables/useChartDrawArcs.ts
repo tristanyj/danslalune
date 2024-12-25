@@ -26,7 +26,7 @@ export function useChartDrawArcs() {
 
       const month = !isLegend ? MONTHS.find((m) => m.id === id) : null;
       const groupMonth = groupedByMonth.value[groupIndex];
-      console.log(id, month, groupMonth);
+
       if (!isLegend && (!month || !groupMonth)) continue;
       if (isLegend) continue;
 

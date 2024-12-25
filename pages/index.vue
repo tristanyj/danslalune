@@ -2,24 +2,42 @@
 useHead({ title: 'Vache — Projet' });
 
 const configStore = useConfigStore();
-const { isLoaded } = storeToRefs(configStore);
+const { isLoaded, selectedCategory, currentColor } = storeToRefs(configStore);
 </script>
 
 <template>
   <div class="grid content bg-[#fff]">
-    <div class="relative p-2">
+    <div class="relative p-4">
       <div class="grid border-2 border-gray-900">
         <div
-          class="grid grid-cols-3 justify-between items-center border-b-2 border-gray-900 p-5 py-2"
+          class="grid grid-cols-2 justify-between items-center border-b-2 border-gray-900 p-6 py-3 text-sm"
         >
-          <div class="">left</div>
-          <div class="flex justify-center">Est-ce que la lune influence les vêlages ?</div>
-          <div class="flex justify-end">right</div>
+          <div class="flex font-medium font-bodoni">Dans la lune</div>
+          <div class="flex justify-end">
+            créé par
+            <a
+              href="https://tristanyj.com"
+              class="underline ml-1"
+              target="_blank"
+            >
+              tristan lanoye
+            </a>
+          </div>
         </div>
-        <div class="grid grid-cols-[1fr,2fr] items-start gap-10">
-          <div class="grid gap-2 p-5 font-bodoni">
-            <h1 class="text-7xl">Est-ce que la lune influence les vêlages ?</h1>
-            <div class="grid gap-2 pt-7">
+        <div class="grid items-start gap-10">
+          <div class="grid grid-cols-[2fr,3fr] items-start gap-10 p-6">
+            <h1 class="text-7xl font-bodoni leading-[1.15]">
+              Est-ce que les phases de la lune influencent les
+              <span :style="{ backgroundColor: `${currentColor}19` }">
+                <template v-if="selectedCategory === 'velage'">vêlages</template>
+                <template v-else-if="selectedCategory === 'matrice'">matrices</template>
+                <template v-else-if="selectedCategory === 'veau_perf'">
+                  perfusions de veau
+                </template>
+              </span>
+              ?
+            </h1>
+            <div class="grid gap-2 pt-5">
               <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat minus deleniti
                 ratione recusandae magni, accusamus, aliquid inventore, placeat optio in iusto
@@ -37,7 +55,7 @@ const { isLoaded } = storeToRefs(configStore);
               </p>
             </div>
           </div>
-          <div class="">
+          <div class="grid gap-10 justify-center pb-10">
             <UiPicker />
             <div class="relative px-4">
               <UiChart v-if="isLoaded" />
@@ -50,13 +68,6 @@ const { isLoaded } = storeToRefs(configStore);
               </div>
             </div>
           </div>
-        </div>
-        <div
-          class="grid grid-cols-3 justify-between items-center border-t-2 border-gray-900 p-5 py-2"
-        >
-          <div class="">Date</div>
-          <div class="flex justify-center">Created by</div>
-          <div class="flex justify-end">Data from</div>
         </div>
       </div>
     </div>
