@@ -48,7 +48,7 @@ const categories = computed<Category[]>(() => {
         :key="category.name"
         class="grid gap-1 justify-center border border-gray-950 p-2 rounded-md transition-all duration-100"
         :class="{
-          'bg-gray-50': selectedCategory === category.name,
+          'bg-gray-50 border-primary': selectedCategory === category.name,
           'bg-white opacity-60': selectedCategory !== category.name,
         }"
         @click="setCategory(category.name)"
