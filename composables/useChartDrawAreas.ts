@@ -31,7 +31,7 @@ export function useChartDrawAreas() {
       .append('path')
       .datum(moonData)
       .attr('fill', 'url(#moonGradient)')
-      .attr('opacity', 0.75)
+      .attr('opacity', 0.825)
       .attr('d', areaGenerator);
   };
 

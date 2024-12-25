@@ -17,7 +17,7 @@ export const useConfigStore = defineStore('config', () => {
   const coef = {
     velage: 2.25,
     matrice: 3,
-    veau_perf: 1.15,
+    veau_perf: 1.18,
   };
 
   const currentColor = computed(() => colors[selectedCategory.value]);

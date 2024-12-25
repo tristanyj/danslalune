@@ -167,15 +167,15 @@ export function useChartDrawLegend() {
     });
 
     g.append('text')
-      .attr('x', newMoonX2 - 25)
+      .attr('x', newMoonX2 - 32)
       .attr('y', newMoonY2 + 15)
-      .text('New Moon')
+      .text('Nouvelle lune')
       .style('font-size', 12);
 
     g.append('text')
-      .attr('x', fullMoonX2 - 25)
+      .attr('x', fullMoonX2 - 31)
       .attr('y', fullMoonY2 + 15)
-      .text('Full Moon')
+      .text('Pleine lune')
       .style('font-size', 12);
   };
 
