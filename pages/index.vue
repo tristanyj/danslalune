@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useHead({ title: 'Vache — Projet' });
+useHead({ title: "Dans la lune — Visualisation de l'influence de la lune sur les vêlages" });
 
 const configStore = useConfigStore();
 const { isLoaded, selectedCategory, currentColor } = storeToRefs(configStore);

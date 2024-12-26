@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-const SITE_TITLE = "Stats don't lie — A visualization of NBA legends";
+const SITE_TITLE = "Dans la lune — L'influence de la lune sur les vêlages.";
 const SITE_DESCRIPTION =
-  'Compare NBA legends through an interactive visualization of their career statistics, records, and achievements. Explore data from 50 players and 130+ statistics.';
+  "Depuis des générations, de nombreux éleveurs sont convaincus que les phases de la lune influencent les vêlages et les interventions vétérinaires. Ce projet de data visualisation explore cette croyance en examinant les corrélations possibles entre les cycles lunaires et les activités d'élevage.";
 const SITE_URL = 'https://stirring-bublanina-c24a45.netlify.app/';
 
 export default defineNuxtConfig({
