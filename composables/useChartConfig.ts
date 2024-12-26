@@ -24,16 +24,8 @@ export function useChartConfig() {
   const radius = Math.min(width, height) / 2 - margin;
   const innerRadiusPadding = 0.375;
   const minRadius = radius * proportions[0] * innerRadiusPadding;
-  const restRadius = radius * proportions[0] * (1 - innerRadiusPadding);
   const maxRadius = radius;
   const radiusPadding = 50;
-
-  // ------------------------------
-  // Positions
-  // ------------------------------
-
-  const scalePositions = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
-  const layerCount = 20;
 
   // ------------------------------
   // Legend
@@ -79,15 +71,12 @@ export function useChartConfig() {
     radius,
     minRadius,
     maxRadius,
-    restRadius,
     proportions,
     wrap,
     color,
     legend,
-    layerCount,
     innerRadiusPadding,
     radiusPadding,
-    scalePositions,
     coefficient,
   };
 }

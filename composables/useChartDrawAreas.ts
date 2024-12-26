@@ -1,5 +1,3 @@
-// import * as d3 from 'd3';
-// import { filter } from 'd3';
 import type { d3GSelection } from '~/types';
 
 export function useChartDrawAreas() {
@@ -47,8 +45,7 @@ export function useChartDrawAreas() {
       .y((d) => d.value)
       .bandwidth(0.1);
 
-    // TODO: change offset based on selected category to prolong the area
-    const offset = 5;
+    const offset = 2;
 
     const values: [[number, number]] = regressionGenerator(filteredDays.value);
     const smoothedData = values

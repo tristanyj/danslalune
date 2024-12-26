@@ -99,7 +99,6 @@ onMounted(() => {
 
 <template>
   <div class="relative z-10">
-    <UiTooltip />
     <div
       id="container"
       ref="container"

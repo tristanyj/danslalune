@@ -1,4 +1,3 @@
-// import * as d3Pkg from 'd3';
 import type { d3GSelection, Line } from '~/types';
 
 export const createLine = (g: d3GSelection, params: Line) => {

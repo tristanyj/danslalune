@@ -1,5 +1,3 @@
-// import * as d3 from 'd3';
-
 import { MONTHS } from '~/assets/scripts/constants';
 import { calcTextLength, shouldFlipText } from '~/assets/scripts/utils';
 import type { d3GSelection } from '~/types';
@@ -70,7 +68,6 @@ export function useChartDrawArcs() {
         .style('font-weight', 'normal')
         .text(text);
 
-      // arc
       const isOdd = groupIndex % 2 === 0;
 
       g.append('path')
