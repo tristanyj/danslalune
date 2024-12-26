@@ -1,7 +1,7 @@
-# Stats don't lie
+# Dans la lune
 
-I follow sports for storylines and numbers. I like statistics, records, rivalries. In this visualization, I tried conveying what fascinates me about sports by comparing some of the greatest basketball players of all time.
+Depuis des générations, de nombreux éleveurs sont convaincus que les phases de la lune influencent les vêlages et les interventions vétérinaires. Ce projet de data visualisation explore cette croyance en examinant les corrélations possibles entre les cycles lunaires et les activités d'élevage.
 
-Technologies used: `TypeScript`, `R`, `D3`, `Nuxt`, `Tailwind`
+Technologies used: `TypeScript`, `Python`, `D3`, `Nuxt`, `Tailwind`
 
-Data from : [Basketball Reference](https://www.basketball-reference.com/)
+Data from : Clinique vétérinaire en Aveyron
