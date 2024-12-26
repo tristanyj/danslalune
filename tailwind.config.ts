@@ -6,8 +6,7 @@ export default <Partial<Config>>{
     extend: {
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
-        anton: ['Anton', 'sans-serif'],
-        bodoni: ['Ledger', 'sans-serif'],
+        ledger: ['Ledger', 'sans-serif'],
       },
       colors: {
         primary: amber,

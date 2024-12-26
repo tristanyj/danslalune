@@ -27,7 +27,7 @@ const { isLoaded, selectedCategory, currentColor } = storeToRefs(configStore);
         <div class="grid items-start gap-5 xl:gap-10">
           <div class="grid xl:grid-cols-2 items-start gap-3 md:gap-6 xl:gap-10 p-6">
             <h1
-              class="text-3xl md:text-5xl xl:text-7xl font-bodoni"
+              class="text-3xl md:text-5xl xl:text-7xl font-ledger"
               :style="{ lineHeight: '1.15 !important' }"
             >
               Est-ce que les phases de la lune influencent les
