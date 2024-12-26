@@ -41,15 +41,15 @@ const categories = computed<Category[]>(() => {
 <template>
   <div class="flex justify-center text-sm">
     <div
-      class="grid grid-flow-col justify-center items-center gap-2 p-2 border border-gray-950 border-opacity-20 rounded-md"
+      class="grid xl:grid-flow-col justify-center items-center gap-2 p-2 border border-gray-950 border-opacity-20 rounded-md"
     >
       <button
         v-for="category in categories"
         :key="category.name"
         class="grid gap-1 justify-center border border-gray-950 p-2 rounded-md transition-all duration-100"
         :class="{
-          'bg-gray-50 border-primary': selectedCategory === category.name,
-          'bg-white opacity-60': selectedCategory !== category.name,
+          'bg-primary-50/20 border-primary': selectedCategory === category.name,
+          'bg-white opacity-75': selectedCategory !== category.name,
         }"
         @click="setCategory(category.name)"
       >

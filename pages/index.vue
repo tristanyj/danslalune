@@ -10,9 +10,9 @@ const { isLoaded, selectedCategory, currentColor } = storeToRefs(configStore);
     <div class="relative p-4">
       <div class="grid border-2 border-gray-900">
         <div
-          class="grid grid-cols-2 justify-between items-center border-b-2 border-gray-900 p-6 py-3 text-sm"
+          class="grid grid-flow-col justify-between items-center border-b-2 border-gray-900 p-6 py-3 text-sm"
         >
-          <div class="flex font-medium font-bodoni">Dans la lune</div>
+          <div class="flex font-medium">Dans la lune</div>
           <div class="flex justify-end">
             créé par
             <a
@@ -24,9 +24,12 @@ const { isLoaded, selectedCategory, currentColor } = storeToRefs(configStore);
             </a>
           </div>
         </div>
-        <div class="grid items-start gap-10">
-          <div class="grid grid-cols-2 items-start gap-10 p-6">
-            <h1 class="text-7xl font-bodoni leading-[1.15]">
+        <div class="grid items-start gap-5 xl:gap-10">
+          <div class="grid xl:grid-cols-2 items-start gap-3 md:gap-6 xl:gap-10 p-6">
+            <h1
+              class="text-3xl md:text-5xl xl:text-7xl font-bodoni"
+              :style="{ lineHeight: '1.15 !important' }"
+            >
               Est-ce que les phases de la lune influencent les
               <span :style="{ backgroundColor: `${currentColor}19` }">
                 <template v-if="selectedCategory === 'velage'">vêlages</template>
@@ -56,7 +59,7 @@ const { isLoaded, selectedCategory, currentColor } = storeToRefs(configStore);
               </p>
             </div>
           </div>
-          <div class="grid gap-8 justify-center pb-10">
+          <div class="grid gap-8 justify-center pb-6 xl:pb-10">
             <UiPicker />
             <div class="relative px-4">
               <UiChart v-if="isLoaded" />
